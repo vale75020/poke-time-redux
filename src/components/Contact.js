@@ -1,6 +1,12 @@
 import React from 'react';
 
-const Contact = () => {
+const Contact = (props) => {
+    console.log(props)
+
+    // setTimeout(() => {
+    //     props.history.push('/about')
+    // }, 2000);  redirection programmée possible grace à react-router
+
     return (
         <div className="container">
             <h4 className="center">Contact</h4>
