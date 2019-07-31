@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { Component } from "react";
+import axios from "axios";
 
-const Home = () => {
+class Home extends Component {
+  state = {
+    posts: []
+  };
+
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/posts`).then(res => {
+      console.log(res);
+      this.setState({
+        posts: res.data.slice(0, 10)
+      });
+    });
+  }
+
+  render() {
+      const { posts } = this.state
+      const postList = posts.length 
+        ? ( posts.map(post => {
+            return (
+                <div className="post card" key={post.id}>
+                    <div className="card content">
+                        <span className="card-title">{post.title}</span>
+                        <p>{post.body}</p>
+                    </div>
+                </div>
+            )
+        }))
+        : (<div className="center">No posts yet</div>)
     return (
-        <div className="container">
-            <h4 className="center">Home</h4>
-            <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker</p>
-        </div>
+      <div className="container">
+        <h4 className="center">Home</h4>
+       {postList}
+      </div>
     );
-};
+  }
+}
 
 export default Home;
